@@ -2,7 +2,7 @@
   "name": "spaceships",
   "version": "0.1.0",
   "engines": {
-    "yarn": "1.22.4"
+    "node": "12.x"
   },
   "scripts": {
     "start": "react-scripts start",
