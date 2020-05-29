@@ -4,7 +4,6 @@ import { nanoid } from 'nanoid';
 
 import Spaceships from './components/spaceships';
 import Space from './components/Space';
-import './App.css';
 import Star from './components/Star';
 
 const App = () => {
@@ -12,20 +11,17 @@ const App = () => {
 
   const ships = useMemo(() => {
     return [
-      { id: nanoid(), color: 'red' },
-      // { id: nanoid(), color: 'orange' },
+      { id: nanoid() },
+      // { id: nanoid() }
     ];
   }, []);
 
   return (
     <Canvas>
       <Star ref={starRef} />
-      <Spaceships
-        star={starRef}
-        ships={ships}
-      />
-      <ambientLight />
+      <Spaceships star={starRef} ships={ships} />
       <Space />
+      <ambientLight />
     </Canvas>
   );
 };
