@@ -7,6 +7,8 @@ import { TextureLoader } from 'three';
 
 // constants
 const gravity = 0.001;
+const thrust = 0.005;
+const rotationFix =  Math.PI / 2
 
 // helper funcs
 const toVec3 = ({ x, y }) => [x, y, 0];
@@ -20,7 +22,7 @@ const Spaceship = ({ ship }) => {
   const texture = useLoader(TextureLoader, '/assets/spaceship.png');
 
   const [pos, setPos] = useState(randomPos());
-  const [rot, setRot] = useState(0);
+  const [rot, setRot] = useState(vecDir(pos)+rotationFix);
 
   const posRef = useRef(pos);
   const rotRef = useRef(rot);
@@ -48,8 +50,8 @@ const Spaceship = ({ ship }) => {
       let rotation = rotRef.current;
 
       // rotate craft
-      if (left) rotation += 0.02;
-      if (right) rotation -= 0.02;
+      if (left) rotation += 0.01;
+      if (right) rotation -= 0.01;
       // constrain (-2pi to +2pi)
       rotation = rotation % (2 * Math.PI);
 
@@ -69,11 +71,10 @@ const Spaceship = ({ ship }) => {
         };
 
         // boosting
-        const thrust = 0.01;
         const boost = boosting
           ? {
-              x: thrust * Math.cos(rotation + Math.PI / 2),
-              y: thrust * Math.sin(rotation + Math.PI / 2),
+              x: thrust * Math.cos(rotation + rotationFix),
+              y: thrust * Math.sin(rotation + rotationFix),
             }
           : { x: 0, y: 0 };
 
