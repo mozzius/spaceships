@@ -18,7 +18,7 @@ const App = () => {
           boost: 'ArrowUp',
           left: 'ArrowLeft',
           right: 'ArrowRight',
-          shoot: 'ControlRight',
+          shoot: 'ShiftRight',
         },
       },
     ];
@@ -31,7 +31,7 @@ const App = () => {
         <p>
           Player 1: WA<span>S</span>D, Space to shoot
         </p>
-        <p>Player 2: Arrow Keys, RightCtrl to shoot</p>
+        <p>Player 2: Arrow Keys, RightShift to shoot</p>
         <p>Bullets don't do anything yet, sorry ;_;</p>
       </div>
       <Canvas>
