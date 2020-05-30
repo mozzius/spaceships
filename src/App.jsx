@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas } from 'react-three-fiber';
 import { nanoid } from 'nanoid';
 
@@ -25,12 +25,24 @@ const App = () => {
   }, []);
 
   return (
-    <Canvas>
-      <Star ref={starRef} />
-      <Spaceships star={starRef} ships={ships} />
-      <Space />
-      <ambientLight />
-    </Canvas>
+    <>
+      <div className="controls">
+        <h3>Spaceships!</h3>
+        <p>
+          Player 1: WA<span>S</span>D, Space to shoot
+        </p>
+        <p>Player 2: Arrow Keys, RightCtrl to shoot</p>
+        <p>Bullets don't do anything yet, sorry ;_;</p>
+      </div>
+      <Canvas>
+        <Suspense fallback={null}>
+          <Star ref={starRef} />
+          <Spaceships star={starRef} ships={ships} />
+          <Space />
+          <ambientLight />
+        </Suspense>
+      </Canvas>
+    </>
   );
 };
 

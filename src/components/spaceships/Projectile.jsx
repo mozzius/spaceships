@@ -8,6 +8,7 @@ const cooldownPeriod = 500; //ms
 const speed = 1;
 const lifespan = 10; //s
 const rotationFix = Math.PI / 2;
+const shipLength = 0.1;
 
 const Projectile = ({ ship, position, velocity, rotation, shooting }) => {
   const [projectiles, setProjectiles] = useState([]);
@@ -33,7 +34,10 @@ const Projectile = ({ ship, position, velocity, rotation, shooting }) => {
       const time = clock.getElapsedTime();
       bullets.push({
         time,
-        position,
+        position: {
+          x: position.x + (shipLength / 2) * Math.cos(rotation + rotationFix),
+          y: position.y + (shipLength / 2) * Math.sin(rotation + rotationFix),
+        },
         velocity: {
           x: velocity.x + speed * Math.cos(rotation + rotationFix),
           y: velocity.y + speed * Math.sin(rotation + rotationFix),

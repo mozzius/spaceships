@@ -24,7 +24,8 @@ const defaultControls = {
 };
 
 const Spaceship = ({ ship: { controls = defaultControls } }) => {
-  const texture = useLoader(TextureLoader, '/assets/spaceship.png');
+  const normalTex = useLoader(TextureLoader, '/assets/spaceship.png');
+  const boostTex = useLoader(TextureLoader, '/assets/spaceship-boost.png');
 
   const [pos, setPos] = useState(randomPos());
   const [vel, setVel] = useState({ x: 0, y: 0 });
@@ -121,7 +122,11 @@ const Spaceship = ({ ship: { controls = defaultControls } }) => {
         onClick={() => setClicked((c) => !c)}
       >
         <planeBufferGeometry attach="geometry" args={[0.1, 0.2]} />
-        <meshStandardMaterial attach="material" map={texture} />
+        <meshStandardMaterial
+          attach="material"
+          map={boosting ? boostTex : normalTex}
+          transparent
+        />
       </mesh>
       <Projectile
         position={pos}

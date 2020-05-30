@@ -1,8 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+.controls {
+  font-family: 'Consolas', monospace;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: white;
+  z-index: 10;
+}
 
-.App {
-  font-family: 'Open Sans', sans-serif;
-  text-align: center;
+p,
+h3 {
+  margin: 0;
+}
+
+span {
+  color: grey;
 }
 
 #root {
