@@ -3,7 +3,7 @@ import { BackSide } from 'three';
 
 export default () => {
   return (
-    <mesh>
+    <mesh userData={{ noIntersect: true }}>
       <sphereBufferGeometry args={[5, 10, 10]} attach="geometry" />
       <meshStandardMaterial
         color={0x000000}

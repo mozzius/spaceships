@@ -1,20 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const useKey = (key) => {
+const useKey = (keyCode) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const onDown = useCallback(
-    ({ key: pressed }) => {
-      if (key === pressed) setIsPressed(true);
+    ({ code: pressed }) => {
+      if (keyCode === pressed) setIsPressed(true);
     },
-    [key]
+    [keyCode]
   );
 
   const onUp = useCallback(
-    ({ key: pressed }) => {
-      if (key === pressed) setIsPressed(false);
+    ({ code: pressed }) => {
+      if (keyCode === pressed) setIsPressed(false);
     },
-    [key]
+    [keyCode]
   );
 
   useEffect(() => {

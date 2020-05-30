@@ -12,7 +12,15 @@ const App = () => {
   const ships = useMemo(() => {
     return [
       { id: nanoid() },
-      // { id: nanoid() }
+      {
+        id: nanoid(),
+        controls: {
+          boost: 'ArrowUp',
+          left: 'ArrowLeft',
+          right: 'ArrowRight',
+          shoot: 'ControlRight',
+        },
+      },
     ];
   }, []);
 
