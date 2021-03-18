@@ -23,9 +23,10 @@ const defaultControls = {
   shoot: 'Space',
 };
 
-const Spaceship = ({ ship: { controls = defaultControls } }) => {
+const Spaceship = ({ exploded, ship: { controls = defaultControls } }) => {
   const normalTex = useLoader(TextureLoader, '/assets/spaceship.png');
   const boostTex = useLoader(TextureLoader, '/assets/spaceship-boost.png');
+  const explosionTex = useLoader(TextureLoader, '/assets/star.png');
 
   const [pos, setPos] = useState(randomPos());
   const [vel, setVel] = useState({ x: 0, y: 0 });
@@ -38,6 +39,7 @@ const Spaceship = ({ ship: { controls = defaultControls } }) => {
 
   // click move (debug)
   const [clicked, setClicked] = useState(false);
+  const [isExploded, setExploded] = useState(false);
 
   // keys
   const boosting = useKey(controls.boost);
@@ -56,6 +58,14 @@ const Spaceship = ({ ship: { controls = defaultControls } }) => {
   useEffect(() => {
     rotRef.current = rot;
   }, [rot]);
+
+  useEffect(() => {
+    if (exploded.includes(mesh.current.uuid)) {
+      setExploded(true);
+    } else {
+      setExploded(false);
+    }
+  }, [exploded]);
 
   useFrame(({ mouse, viewport }, delta) => {
     if (!clicked) {
@@ -106,6 +116,7 @@ const Spaceship = ({ ship: { controls = defaultControls } }) => {
       setRot(rotation);
       setVel(velocity);
     } else {
+      // debug mouse movement
       const x = (mouse.x * viewport.width) / 2;
       const y = (mouse.y * viewport.height) / 2;
 
@@ -115,19 +126,30 @@ const Spaceship = ({ ship: { controls = defaultControls } }) => {
 
   return (
     <group>
-      <mesh
-        position={toVec3(pos)}
-        rotation={[0, 0, rot]}
-        ref={mesh}
-        onClick={() => setClicked((c) => !c)}
-      >
-        <planeBufferGeometry attach="geometry" args={[0.1, 0.2]} />
-        <meshStandardMaterial
-          attach="material"
-          map={boosting ? boostTex : normalTex}
-          transparent
-        />
-      </mesh>
+      {exploded ? (
+        <mesh
+          position={toVec3(pos)}
+          rotation={[0, 0, rot]}
+          ref={mesh}
+          onClick={() => setClicked((c) => !c)}
+        >
+          <boxBufferGeometry attach="geometry" args={[0.1, 0.2, 0.01]} />
+          <meshStandardMaterial
+            attach="material"
+            map={boosting ? boostTex : normalTex}
+            transparent
+          />
+        </mesh>
+      ) : (
+        <mesh>
+          <circleBufferGeometry attach="geometry" args={[0.2, 8]} />
+          <meshStandardMaterial
+            attach="material"
+            map={explosionTex}
+            transparent
+          />
+        </mesh>
+      )}
       <Projectile
         position={pos}
         velocity={vel}

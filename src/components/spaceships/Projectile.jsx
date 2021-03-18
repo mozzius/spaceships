@@ -1,7 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useFrame } from 'react-three-fiber';
 
-import { pythag, vecDir, square, gravity, toVec3 } from '../../other/physics';
+import {
+  pythag,
+  vecDir,
+  square,
+  gravity,
+  toVec3,
+  toUnitVec3,
+  betweenVec,
+} from '../../other/physics';
+import { Collide } from '.';
 
 // constants
 const cooldownPeriod = 500; //ms
@@ -9,10 +18,15 @@ const speed = 1;
 const lifespan = 10; //s
 const rotationFix = Math.PI / 2;
 const shipLength = 0.1;
+const zero = { x: 0, y: 0, z: 0 };
 
 const Projectile = ({ ship, position, velocity, rotation, shooting }) => {
   const [projectiles, setProjectiles] = useState([]);
   const [cooldown, setCooldown] = useState(false);
+  const [arrow, setArrow] = useState({ origin: zero, dir: zero, length: 1 });
+
+  const { explode } = useContext(Collide);
+
   const projRef = useRef(projectiles);
   const timeRef = useRef();
 
@@ -67,11 +81,22 @@ const Projectile = ({ ship, position, velocity, rotation, shooting }) => {
             y: velocity.y + acceleration * Math.sin(direction),
           };
 
-          // update position
-          position = {
+          const newPos = {
             x: position.x + velocity.x * delta,
             y: position.y + velocity.y * delta,
           };
+
+          setArrow({
+            origin: { ...position, z: 0 },
+            direction: toUnitVec3(betweenVec(position, newPos)),
+            length: 1,
+          });
+
+          // raycasting
+          //raycaster.set({ ...position, z: 0 }, { ...velocity, z: 0 });
+
+          // update position
+          position = newPos;
 
           return {
             time,
@@ -93,6 +118,7 @@ const Projectile = ({ ship, position, velocity, rotation, shooting }) => {
           </mesh>
         );
       })}
+      <arrowHelper args={[arrow.dir, arrow.origin, arrow.length]} />
     </group>
   );
 };

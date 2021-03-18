@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "author": "Samuel Newman",
   "license": "MIT",
-  "engines": {
-    "node": "12.x"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -13,19 +10,19 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
-    "nanoid": "^3.1.9",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
-    "react-three-fiber": "^4.2.7",
-    "serve": "^11.3.1",
-    "three": "^0.117.0"
+    "lodash": "^4.17.21",
+    "nanoid": "^3.1.22",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.3",
+    "react-three-fiber": "^5.3.19",
+    "serve": "^11.3.2",
+    "three": "^0.126.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2"
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^13.0.2"
   },
   "eslintConfig": {
     "extends": "react-app"
